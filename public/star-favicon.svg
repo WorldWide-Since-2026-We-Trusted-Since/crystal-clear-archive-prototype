@@ -1,0 +1,42 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="starGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700"/>
+      <stop offset="50%" style="stop-color:#FFA500"/>  
+      <stop offset="100%" style="stop-color:#FF4500"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#FFFF00;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#FFD700;stop-opacity:0"/>
+    </radialGradient>
+  </defs>
+  
+  <!-- Hintergrund-Glow -->
+  <circle cx="16" cy="16" r="15" fill="url(#glow)"/>
+  
+  <!-- Rotierender 8-zackiger Stern -->
+  <g transform-origin="16 16">
+    <animateTransform attributeName="transform" type="rotate" 
+                      values="0;360" dur="3s" repeatCount="indefinite"/>
+    <path d="M16,2 L19,10 L28,8 L22,14 L30,16 L22,18 L28,24 L19,22 L16,30 L13,22 L4,24 L10,18 L2,16 L10,14 L4,8 L13,10 Z" 
+          fill="url(#starGrad)" 
+          stroke="#FFD700" 
+          stroke-width="1"/>
+    
+    <!-- Innerer blinkender Kern -->
+    <circle cx="16" cy="16" r="3" fill="#FFFFFF">
+      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    
+    <!-- Glitzerpunkte -->
+    <circle cx="8" cy="8" r="1" fill="#FFF">
+      <animate attributeName="opacity" values="0;1;0" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="24" cy="12" r="1" fill="#FFF">
+      <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="6" cy="24" r="1" fill="#FFF">
+      <animate attributeName="opacity" values="0;1;0" dur="1.8s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+</svg>
