@@ -1,22 +1,108 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- TODO: Set the document title to the name of your application -->
-    <title>Lovable App</title>
-    <meta name="description" content="Lovable Generated Project" />
-    <meta name="author" content="Lovable" />
+    <title>Sternenzauber ✨</title>
+    <meta name="description" content="Sternenzauber – eine flippige App voller tanzender Sterne" />
+    <meta name="author" content="Sternenzauber" />
 
-    <!-- TODO: Update og:title to match your application name -->
-    <meta property="og:title" content="Lovable App" />
-    <meta property="og:description" content="Lovable Generated Project" />
+    <link id="app-favicon" rel="icon" type="image/svg+xml" href="/star-favicon.svg" />
+
+    <meta property="og:title" content="Sternenzauber ✨" />
+    <meta property="og:description" content="Sternenzauber – eine flippige App voller tanzender Sterne" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@Lovable" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+    <script>
+      (function () {
+        const link = document.getElementById('app-favicon');
+        const size = 32;
+        const canvas = document.createElement('canvas');
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        const points = [
+          [16, 2], [19, 10], [28, 8], [22, 14], [30, 16], [22, 18],
+          [28, 24], [19, 22], [16, 30], [13, 22], [4, 24], [10, 18],
+          [2, 16], [10, 14], [4, 8], [13, 10]
+        ];
+
+        let angle = 0;
+        let pulse = 0;
+
+        function draw() {
+          ctx.clearRect(0, 0, size, size);
+
+          const glow = ctx.createRadialGradient(16, 16, 2, 16, 16, 16);
+          glow.addColorStop(0, 'rgba(255, 255, 0, 0.85)');
+          glow.addColorStop(1, 'rgba(255, 215, 0, 0)');
+          ctx.fillStyle = glow;
+          ctx.beginPath();
+          ctx.arc(16, 16, 15, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.save();
+          ctx.translate(16, 16);
+          ctx.rotate(angle);
+          ctx.translate(-16, -16);
+
+          const grad = ctx.createLinearGradient(0, 0, size, size);
+          grad.addColorStop(0, '#FFD700');
+          grad.addColorStop(0.5, '#FFA500');
+          grad.addColorStop(1, '#FF4500');
+
+          ctx.beginPath();
+          ctx.moveTo(points[0][0], points[0][1]);
+          for (let i = 1; i < points.length; i++) {
+            ctx.lineTo(points[i][0], points[i][1]);
+          }
+          ctx.closePath();
+          ctx.fillStyle = grad;
+          ctx.strokeStyle = '#FFD700';
+          ctx.lineWidth = 1;
+          ctx.fill();
+          ctx.stroke();
+
+          const coreOpacity = 0.65 + 0.35 * Math.sin(pulse);
+          ctx.beginPath();
+          ctx.arc(16, 16, 3, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(255, 255, 255, ' + coreOpacity + ')';
+          ctx.fill();
+
+          ctx.restore();
+
+          const sparkles = [
+            { x: 8, y: 8, phase: 0 },
+            { x: 24, y: 12, phase: 1.7 },
+            { x: 6, y: 24, phase: 3.1 }
+          ];
+          for (const s of sparkles) {
+            const a = Math.max(0, Math.sin(pulse * 1.4 + s.phase));
+            ctx.fillStyle = 'rgba(255, 255, 255, ' + a + ')';
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, 1, 0, Math.PI * 2);
+            ctx.fill();
+          }
+
+          link.href = canvas.toDataURL('image/png');
+
+          angle += (Math.PI * 2) / 36;
+          pulse += 0.18;
+          if (angle >= Math.PI * 2) angle -= Math.PI * 2;
+        }
+
+        function tick() {
+          if (!document.hidden) draw();
+        }
+
+        draw();
+        setInterval(tick, 120);
+      })();
+    </script>
   </head>
 
   <body>
